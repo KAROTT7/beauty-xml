@@ -1,7 +1,4 @@
-const DOCUMENT_TYPE = 'DOCUMENT'
-const ELEMENT_TYPE  = 'ELEMENT'
-const COMMENT_TYPE  = 'COMMENT'
-const TEXT_TYPE     = 'TEXT'
+const types = require('./types')
 
 const DOCTYPE = /^<\?xml/
 const COMMENT = /^<!--(.*)-->/
@@ -32,7 +29,7 @@ function parse(template) {
       // 节点处理
       if (matched = template.match(DOCTYPE)) {
         const element = {
-          type: DOCUMENT_TYPE,
+          type: types.DOCUMENT,
           attrs: [],
           start: index,
         }
@@ -57,7 +54,7 @@ function parse(template) {
       if (matched = template.match(COMMENT)) {
         if (matched[1].trim()) {
           const element = {
-            type: COMMENT_TYPE,
+            type: types.COMMENT,
             value: matched[1].trim(),
             start: index,
             end: index + matched[0].length,
@@ -98,7 +95,7 @@ function parse(template) {
 
       if (matched = template.match(TAG_START_OPEN)) {
         const element = {
-          type: ELEMENT_TYPE,
+          type: types.ELEMENT,
           tag: matched[1],
           lowerCaseTagName: matched[1].toLowerCase(),
           start: index,
@@ -145,7 +142,7 @@ function parse(template) {
     let rest = template.replace(endTagRe, (all, text, endTag) => {
       if (text && text.trim()) {
         const element = {
-          type: TEXT_TYPE,
+          type: types.TEXT,
           value: text.trim(),
           start: index,
           end: index + text.length

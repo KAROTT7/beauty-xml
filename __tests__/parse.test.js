@@ -1,4 +1,5 @@
 const parse = require('../parse')
+const types = require('../types')
 
 describe('测试 parse 方法', () => {
   it('是否是 XML 文档', () => {
@@ -10,7 +11,7 @@ describe('测试 parse 方法', () => {
     expect(
       parse(input)
     ).toEqual([{
-      type: 'DOCUMENT',
+      type: types.DOCUMENT,
       attrs: ['version="1.0"', 'encoding="utf-8"'],
       start: 0,
       end: input.length
@@ -23,13 +24,13 @@ describe('测试 parse 方法', () => {
       parse(input)
     ).toEqual([
       {
-        type: 'DOCUMENT',
+        type: types.DOCUMENT,
         attrs: ['version="1.0"', 'encoding="utf-8"'],
         start: 0,
         end: 38
       },
       {
-        type: 'COMMENT',
+        type: types.COMMENT,
         value: 'comment',
         start: 38,
         end: input.length
@@ -43,19 +44,19 @@ describe('测试 parse 方法', () => {
       parse(input)
     ).toEqual([
       {
-        type: 'DOCUMENT',
+        type: types.DOCUMENT,
         attrs: ['version="1.0"', 'encoding="utf-8"'],
         start: 0,
         end: 38
       },
       {
-        type: 'COMMENT',
+        type: types.COMMENT,
         value: 'comment',
         start: 38,
         end: 52
       },
       {
-        type: 'ELEMENT',
+        type: types.ELEMENT,
         tag: 'a',
         lowerCaseTagName: 'a',
         start: 52,
@@ -74,19 +75,19 @@ describe('测试 parse 方法', () => {
       parse(input)
     ).toEqual([
       {
-        type: 'DOCUMENT',
+        type: types.DOCUMENT,
         attrs: ['version="1.0"', 'encoding="utf-8"'],
         start: 0,
         end: 38
       },
       {
-        type: 'COMMENT',
+        type: types.COMMENT,
         value: 'comment',
         start: 38,
         end: 52
       },
       {
-        type: 'ELEMENT',
+        type: types.ELEMENT,
         tag: 'a',
         lowerCaseTagName: 'a',
         start: 52,
@@ -105,19 +106,19 @@ describe('测试 parse 方法', () => {
       parse(input)
     ).toEqual([
       {
-        type: 'DOCUMENT',
+        type: types.DOCUMENT,
         attrs: ['version="1.0"', 'encoding="utf-8"'],
         start: 0,
         end: 38
       },
       {
-        type: 'COMMENT',
+        type: types.COMMENT,
         value: 'comment',
         start: 38,
         end: 52
       },
       {
-        type: 'ELEMENT',
+        type: types.ELEMENT,
         tag: 'a',
         lowerCaseTagName: 'a',
         start: 52,
@@ -128,7 +129,7 @@ describe('测试 parse 方法', () => {
         isSelfClose: true
       },
       {
-        type: 'ELEMENT',
+        type: types.ELEMENT,
         tag: 'B',
         lowerCaseTagName: 'b',
         start: 57,
@@ -136,7 +137,7 @@ describe('测试 parse 方法', () => {
         attrs: [],
         children: [
           {
-            type: 'TEXT',
+            type: types.TEXT,
             value: 'b',
             start: 60,
             end: 61
@@ -154,19 +155,19 @@ describe('测试 parse 方法', () => {
       parse(input)
     ).toEqual([
       {
-        type: 'DOCUMENT',
+        type: types.DOCUMENT,
         attrs: ['version="1.0"', 'encoding="utf-8"'],
         start: 0,
         end: 38
       },
       {
-        type: 'COMMENT',
+        type: types.COMMENT,
         value: 'comment',
         start: 38,
         end: 52
       },
       {
-        type: 'ELEMENT',
+        type: types.ELEMENT,
         tag: 'a',
         lowerCaseTagName: 'a',
         start: 52,
@@ -177,7 +178,7 @@ describe('测试 parse 方法', () => {
         isSelfClose: true
       },
       {
-        type: 'ELEMENT',
+        type: types.ELEMENT,
         tag: 'B',
         lowerCaseTagName: 'b',
         start: 57,
@@ -185,7 +186,7 @@ describe('测试 parse 方法', () => {
         attrs: ['c="d"', 'e="f"'],
         children: [
           {
-            type: 'TEXT',
+            type: types.TEXT,
             value: 'b',
             start: 72,
             end: 73
@@ -203,19 +204,19 @@ describe('测试 parse 方法', () => {
       parse(input)
     ).toEqual([
       {
-        type: 'DOCUMENT',
+        type: types.DOCUMENT,
         attrs: ['version="1.0"', 'encoding="utf-8"'],
         start: 0,
         end: 38
       },
       {
-        type: 'COMMENT',
+        type: types.COMMENT,
         value: 'comment',
         start: 38,
         end: 52
       },
       {
-        type: 'ELEMENT',
+        type: types.ELEMENT,
         tag: 'a',
         lowerCaseTagName: 'a',
         start: 52,
@@ -226,7 +227,7 @@ describe('测试 parse 方法', () => {
         isSelfClose: true
       },
       {
-        type: 'ELEMENT',
+        type: types.ELEMENT,
         tag: 'B',
         lowerCaseTagName: 'b',
         start: 57,
@@ -234,7 +235,7 @@ describe('测试 parse 方法', () => {
         attrs: [],
         children: [
           {
-            type: 'TEXT',
+            type: types.TEXT,
             value: 'b',
             start: 60,
             end: 61
@@ -244,7 +245,7 @@ describe('测试 parse 方法', () => {
         isSelfClose: false
       },
       {
-        type: 'ELEMENT',
+        type: types.ELEMENT,
         tag: 'c',
         lowerCaseTagName: 'c',
         start: 65,
@@ -252,7 +253,7 @@ describe('测试 parse 方法', () => {
         attrs: [],
         children: [
           {
-            type: 'ELEMENT',
+            type: types.ELEMENT,
             tag: 'd',
             lowerCaseTagName: 'd',
             start: 68,
@@ -260,7 +261,7 @@ describe('测试 parse 方法', () => {
             attrs: [],
             children: [
               {
-                type: 'ELEMENT',
+                type: types.ELEMENT,
                 tag: 'e',
                 lowerCaseTagName: 'e',
                 start: 71,
@@ -268,7 +269,7 @@ describe('测试 parse 方法', () => {
                 attrs: [],
                 children: [
                   {
-                    type: 'TEXT',
+                    type: types.TEXT,
                     value: 'e',
                     start: 74,
                     end: 75
@@ -294,19 +295,19 @@ describe('测试 parse 方法', () => {
       parse(input)
     ).toEqual([
       {
-        type: 'DOCUMENT',
+        type: types.DOCUMENT,
         attrs: ['version="1.0"', 'encoding="utf-8"'],
         start: 0,
         end: 38
       },
       {
-        type: 'COMMENT',
+        type: types.COMMENT,
         value: 'comment',
         start: 38,
         end: 52
       },
       {
-        type: 'ELEMENT',
+        type: types.ELEMENT,
         tag: 'a',
         lowerCaseTagName: 'a',
         start: 52,
@@ -317,7 +318,7 @@ describe('测试 parse 方法', () => {
         isSelfClose: true
       },
       {
-        type: 'ELEMENT',
+        type: types.ELEMENT,
         tag: 'B',
         lowerCaseTagName: 'b',
         start: 57,
@@ -325,7 +326,7 @@ describe('测试 parse 方法', () => {
         attrs: [],
         children: [
           {
-            type: 'TEXT',
+            type: types.TEXT,
             value: 'b',
             start: 60,
             end: 61
@@ -335,7 +336,7 @@ describe('测试 parse 方法', () => {
         isSelfClose: false
       },
       {
-        type: 'ELEMENT',
+        type: types.ELEMENT,
         tag: 'c',
         lowerCaseTagName: 'c',
         start: 65,
@@ -343,7 +344,7 @@ describe('测试 parse 方法', () => {
         attrs: [],
         children: [
           {
-            type: 'ELEMENT',
+            type: types.ELEMENT,
             tag: 'd',
             lowerCaseTagName: 'd',
             start: 68,
@@ -351,7 +352,7 @@ describe('测试 parse 方法', () => {
             attrs: [],
             children: [
               {
-                type: 'ELEMENT',
+                type: types.ELEMENT,
                 tag: 'e',
                 lowerCaseTagName: 'e',
                 start: 71,
@@ -359,7 +360,7 @@ describe('测试 parse 方法', () => {
                 attrs: [],
                 children: [
                   {
-                    type: 'TEXT',
+                    type: types.TEXT,
                     value: 'e',
                     start: 74,
                     end: 75
@@ -369,7 +370,7 @@ describe('测试 parse 方法', () => {
                 isSelfClose: false
               },
               {
-                type: 'ELEMENT',
+                type: types.ELEMENT,
                 tag: 'F',
                 lowerCaseTagName: 'f',
                 start: 79,
@@ -377,7 +378,7 @@ describe('测试 parse 方法', () => {
                 attrs: [],
                 children: [
                   {
-                    type: 'TEXT',
+                    type: types.TEXT,
                     value: 'f',
                     start: 82,
                     end: 83

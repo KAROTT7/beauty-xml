@@ -1,4 +1,4 @@
-const types = require('./types')
+import types from './types.js'
 
 const DOCTYPE = /^<\?xml/
 const COMMENT = /^<!--(.*)-->/
@@ -165,6 +165,4 @@ function parse(template) {
   return tokens
 }
 
-// const tokens = parse(xml.trim())
-
-module.exports = parse
+export default parse

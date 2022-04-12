@@ -1,4 +1,4 @@
-const types = require('./types')
+import types from './types.js'
 
 function createSpan(text, className) {
   return `<span${className ? ` class="${className}"` : ''}>${text}</span>`
@@ -51,7 +51,7 @@ function generate(tokens, options) {
       const attrs = geneAttrs(node.attrs)
 
       if (node.type === types.DOCUMENT) {
-        code += createTokenLine(marks.lessThan + marks.questionMark + marks.tag('xml') + marks.whitespace + attrs + marks.questionMark + marks.greaterThan, 'doctype', needBreakLink)
+        code += createTokenLine(marks.lessThan + marks.questionMark + marks.tag('xml') + attrs + marks.questionMark + marks.greaterThan, 'doctype', needBreakLink)
       } else if (node.type === types.COMMENT) {
         code += createTokenLine(padding + marks.lessThan + marks.questionMark + marks.doubleHyphen + marks.whitespace + marks.plain(node.value) + marks.whitespace + marks.doubleHyphen + marks.greaterThan, 'comment', needBreakLink)
       } else if (node.type === types.ELEMENT) {
@@ -79,4 +79,4 @@ function generate(tokens, options) {
   return code
 }
 
-module.exports = generate
+export default generate

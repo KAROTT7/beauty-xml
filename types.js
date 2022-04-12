@@ -1,4 +1,4 @@
-module.exports = {
+export default {
   DOCUMENT: 'DOCUMENT',
   ELEMENT: 'ELEMENT',
   COMMENT: 'COMMENT',

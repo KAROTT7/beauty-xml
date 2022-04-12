@@ -1,5 +1,5 @@
-const parse = require('./parse')
-const generate = require('./generate')
+import parse from './parse.js'
+import generate from './generate.js'
 
 function compile(xml) {
   const ast = parse(xml.trim())
@@ -8,8 +8,4 @@ function compile(xml) {
   return code
 }
 
-module.exports = {
-  parse,
-  generate,
-  compile
-}
+export default compile

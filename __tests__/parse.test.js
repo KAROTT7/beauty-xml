@@ -1,5 +1,5 @@
-const parse = require('../parse')
-const types = require('../types')
+import types from '../types.js'
+import parse from '../parse.js'
 
 describe('测试 parse 方法', () => {
   it('是否是 XML 文档', () => {

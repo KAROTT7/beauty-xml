@@ -1,14 +1,22 @@
 {
-  "name": "xml-ast",
-  "version": "1.0.0",
-  "description": "",
+  "name": "beauty-xml",
+  "version": "0.1.0",
+  "description": "Formatting XML for display in html, or copy.",
   "main": "index.js",
   "scripts": {
     "test": "jest"
   },
   "type": "module",
-  "author": "",
-  "license": "ISC",
+  "author": "KAROTT7",
+  "homepage": "https://github.com/KAROTT7/beauty-xml#readme",
+  "repository": {
+    "type": "https",
+    "url": "https://github.com/KAROTT7/beauty-xml.git"
+  },
+  "bugs": {
+    "url": "https://github.com/KAROTT7/beauty-xml/issues"
+  },
+  "license": "MIT",
   "devDependencies": {
     "jest": "^27.5.1"
   }

@@ -1,31 +1,34 @@
 import types from './types.js'
 
-function createSpan(text, className) {
-  return `<span${className ? ` class="${className}"` : ''}>${text}</span>`
-}
+function generate(tokens, options = {}) {
+  const toText = options.type === 'text'
+  const hooks = options.hooks ? options.hooks : {}
 
-function createTokenLine(text, className, br) {
-  return createSpan(text + (br ? '<br/>' : ''), `token-line${className ? ` ${className}` : ''}`)
-}
+  function createSpan(text, className) {
+    return toText ? text : `<span${className ? ` class="${className}"` : ''}>${text}</span>`
+  }
 
-const marks = {
-  whitespace: createSpan(' '),
-  slash: createSpan('/', 'slash'),
-  lessThan: createSpan('<', 'less-than'),
-  greaterThan: createSpan('>', 'greater-than'),
-  singleQuotation: createSpan("'", 'single-quotation'),
-  doubleQuotation: createSpan('"', 'double-quotation'),
-  doubleHyphen: createSpan('--', 'double-hyphen'),
-  questionMark: createSpan('?', 'question-mark'),
-  equal: createSpan('=', 'equal'),
-  attrName: n => createSpan(n, 'attr-name'),
-  attrValue: n => createSpan(n, 'attr-value'),
-  tag: n => createSpan(n, 'tag'),
-  plain: n => createSpan(n, 'plain'),
-  br: '<br/>'
-}
+  function createTokenLine(text, className, br) {
+    return createSpan(text + (br ? marks.br : ''), `token-line${className ? ` ${className}` : ''}`)
+  }
 
-function generate(tokens, options) {
+  const marks = {
+    whitespace: toText ? ' ' : createSpan(' '),
+    slash: createSpan('/', 'slash'),
+    lessThan: createSpan('<', 'less-than'),
+    greaterThan: createSpan('>', 'greater-than'),
+    singleQuotation: createSpan("'", 'single-quotation'),
+    doubleQuotation: createSpan('"', 'double-quotation'),
+    doubleHyphen: createSpan('--', 'double-hyphen'),
+    questionMark: createSpan('?', 'question-mark'),
+    equal: createSpan('=', 'equal'),
+    attrName: n => createSpan(n, 'attr-name'),
+    attrValue: n => createSpan(n, 'attr-value'),
+    tag: n => createSpan(n, 'tag'),
+    plain: n => createSpan(n, 'plain'),
+    br: toText ? '\n' : '<br/>'
+  }
+
   function geneAttrs(attrs = []) {
     if (!Array.isArray(attrs) || !attrs.length) {
       return ''
@@ -46,23 +49,29 @@ function generate(tokens, options) {
     let code = ''
 
     nodes.forEach((node, i) => {
-      const suffix = i === nodes.length - 1 ? '' : '<br/>'
       const needBreakLink = i !== nodes.length - 1
       const attrs = geneAttrs(node.attrs)
 
       if (node.type === types.DOCUMENT) {
-        code += createTokenLine(marks.lessThan + marks.questionMark + marks.tag('xml') + attrs + marks.questionMark + marks.greaterThan, 'doctype', needBreakLink)
-      } else if (node.type === types.COMMENT) {
-        code += createTokenLine(padding + marks.lessThan + marks.questionMark + marks.doubleHyphen + marks.whitespace + marks.plain(node.value) + marks.whitespace + marks.doubleHyphen + marks.greaterThan, 'comment', needBreakLink)
-      } else if (node.type === types.ELEMENT) {
-        const tag = marks.tag(node.tag)
 
+        code += createTokenLine(marks.lessThan + marks.questionMark + marks.tag('xml') + attrs + marks.questionMark + marks.greaterThan, 'doctype', needBreakLink)
+
+      } else if (node.type === types.COMMENT) {
+
+        code += createTokenLine(padding + marks.lessThan + marks.questionMark + marks.doubleHyphen + marks.whitespace + marks.plain(node.value) + marks.whitespace + marks.doubleHyphen + marks.greaterThan, 'comment', needBreakLink)
+
+      } else if (node.type === types.ELEMENT) {
+
+        const tag = marks.tag(node.tag)
         const child = genElement(node.children, depth + 1)
         const children = child.newLine ? marks.br + child.code + marks.br : child.code
 
         code += createTokenLine(padding + marks.lessThan + tag + attrs + marks.greaterThan + children + (child.newLine ? padding : '') + marks.lessThan + marks.slash + tag + marks.greaterThan, 'element', needBreakLink)
+
       } else if (node.type === types.TEXT) {
-        code += marks.plain(node.value)
+
+        code += marks.plain(hooks.text ? hooks.text(node.value) : node.value)
+
       } else {
         throw new Error('Unknown node type: ' + node.type)
       }

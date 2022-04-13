@@ -48,6 +48,8 @@ const xml = `<?xml verison="1.0" encoding="utf-8"?><person><jake><age>21</age><h
   ```js
   // you can modify text via hooks.text
   const result = compile(xml, {
-    text(t) { return t.repeat(n) }
+    hooks: {
+      text(t) { return t.repeat(n) }
+    }
   })
   ```

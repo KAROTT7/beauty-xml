@@ -1,6 +1,7 @@
 {
   "name": "beauty-xml",
   "version": "0.1.1",
+  "keywords": ["xml", "format"],
   "description": "Formatting XML for display in html, or copy.",
   "main": "index.js",
   "scripts": {

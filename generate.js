@@ -45,7 +45,7 @@ function generate(tokens, options = {}) {
   }
 
   function genElement(nodes, depth, parent) {
-    const padding = marks.whitespace.repeat(depth * 2)
+    const padding = marks.whitespace.repeat(depth * options.indent)
     let code = ''
 
     nodes.forEach((node, i) => {

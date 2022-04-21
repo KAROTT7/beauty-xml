@@ -44,10 +44,16 @@ const xml = `<?xml verison="1.0" encoding="utf-8"?><person><jake><age>21</age><h
   // if `text`, the output is plain text
   const output = compile(xml, options)
   ```
+- options.indent {number} - define indent number 
+  ```js
+  const output = compile(xml, {
+    indent: 2
+  })
+  ```
 - options.hooks - { text(originText): string }
   ```js
   // you can modify text via hooks.text
-  const result = compile(xml, {
+  const output = compile(xml, {
     hooks: {
       text(t) { return t.repeat(n) }
     }
